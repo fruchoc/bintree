@@ -1,0 +1,46 @@
+*.o
+*.a
+bin/
+lib/
+*~
+*.sav
+*.aux
+*.sen
+*.sim
+*.vcxproj*
+*.sln
+*.opensdf
+*.sdf
+*.suo
+
+# Profiling output files
+*gmon.out
+*callgrind*
+
+# Cmake ignores
+*CMakeFiles
+*.cmake
+build/
+Testing/
+*CMakeCache.txt
+Debug/
+Release/
+*.dir/
+*.project
+*.cproject
+
+# Executables built by cmake
+mops-app
+brush-app
+camflow-app
+brush-moonmd-test
+sprogc-test
+PAHkmc-app
+chemkinReader-test
+*.exe
+
+# log files
+*log*
+
+# Patches
+*.patch
