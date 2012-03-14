@@ -61,6 +61,38 @@ void ParticleModel::SetProperties(int prop1, int prop2)
     m_prop2 = prop2;
 }
 
+
+/*!
+ * @brief       Creates a basic particle tree (example 1)
+ *
+ * This is a particle composed of two real primaries connected by the root
+ * node. Diagram:
+ *    root
+ *    /  \
+ *  left right
+ *
+ */
+void ParticleModel::CreateParticle1() {
+    // Adjust the base node of the tree
+    SetProperties(11, 22);
+
+    // Create children
+    m_leftchild = new ParticleModel();
+    m_leftchild->SetProperties(33, 44);
+
+    m_rightchild = new ParticleModel();
+    m_rightchild->SetProperties(55, 66);
+
+    // Link particles
+    m_leftparticle = m_leftchild;
+    m_rightparticle = m_rightchild;
+
+    // Link parents
+    m_leftparticle->m_parent = this;
+    m_rightparticle->m_parent = this;
+}
+
+
 /*!
  * @brief           Writes the object to a binary stream
  * @param   out     Output binary stream

@@ -29,6 +29,11 @@ public:
     // MODIFYING THE OBJECT
     void SetProperties(int prop1, int prop2);
 
+    // CREATION OF PARTICLE TREES FOR ILLUSTRATION
+    //! Creates a particle tree (example 1)
+    void CreateParticle1();
+
+
     // SERIALISATION OF OBJECT
     //! Write object to output stream
     void Serialise(ostream &out) const;

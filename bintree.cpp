@@ -2,14 +2,14 @@
 #include <iostream>
 #include <fstream>
 #include "include/particle_model.h"
+#include "include/bintree_cache.h"
 
 using namespace std;
 
 int main(int argc, char *argv[]) {
 
     ParticleModel test;
-    test.SetProperties(5, 6);
-    test.PrintParticle();
+    test.CreateParticle1();
 
     // Write to save file
     ofstream ofile("test.sav", ios::binary);
@@ -25,3 +25,5 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
+
+
