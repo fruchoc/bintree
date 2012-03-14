@@ -23,8 +23,15 @@ public:
     //! Default destructor
     virtual ~ParticleModel(void);
 
+    // RETURNING INFORMATION ABOUT THE OBJECT
     //! Print the particle state space
     void PrintParticle() const;
+
+    //! Return the left child
+    const ParticleModel *GetLeftChild() const;
+
+    //! Return the right child
+    const ParticleModel *GetRightChild() const;
 
     // MODIFYING THE OBJECT
     void SetProperties(int prop1, int prop2);
@@ -32,7 +39,6 @@ public:
     // CREATION OF PARTICLE TREES FOR ILLUSTRATION
     //! Creates a particle tree (example 1)
     void CreateParticle1();
-
 
     // SERIALISATION OF OBJECT
     //! Write object to output stream

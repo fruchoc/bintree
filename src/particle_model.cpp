@@ -7,6 +7,7 @@
 
 // Includes
 #include "../include/particle_model.h"
+#include "../include/cache_index.h"
 #include <iostream>
 #include <stack>
 
@@ -48,6 +49,16 @@ void ParticleModel::PrintParticle() const
     cout << " lc: " << m_leftchild << " rc: " << m_rightchild;
     cout << " lp: " << m_leftparticle << " rp: " << m_rightparticle;
     cout << " parent: " << m_parent << endl;
+}
+
+const ParticleModel *ParticleModel::GetLeftChild() const
+{
+    return m_leftchild;
+}
+
+const ParticleModel *ParticleModel::GetRightChild() const
+{
+    return m_rightchild;
 }
 
 /*!
@@ -103,6 +114,18 @@ void ParticleModel::Serialise(ostream &out) const
         // Write version
         const unsigned int version = 0;
         out.write((char*)&version, sizeof(version));
+
+        CacheIndex index;
+        index.CreateIndex(this);
+
+        // Write this element
+        SerialisePrimary(out);
+
+        // Descend the left side of the tree
+        m_leftparticle->SerialisePrimary(out);
+
+        // Descend the right side of the tree
+        m_rightparticle->SerialisePrimary(out);
     }
 }
 
