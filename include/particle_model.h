@@ -26,6 +26,9 @@ public:
     //! Print the particle state space
     void PrintParticle() const;
 
+    // MODIFYING THE OBJECT
+    void SetProperties(int prop1, int prop2);
+
     // SERIALISATION OF OBJECT
     //! Write object to output stream
     void Serialise(ostream &out) const;

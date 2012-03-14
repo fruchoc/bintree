@@ -51,6 +51,17 @@ void ParticleModel::PrintParticle() const
 }
 
 /*!
+ * @brief           Sets the state space of the particle
+ * @param prop1     Value of property 1
+ * @param prop2     Value of property 2
+ */
+void ParticleModel::SetProperties(int prop1, int prop2)
+{
+    m_prop1 = prop1;
+    m_prop2 = prop2;
+}
+
+/*!
  * @brief           Writes the object to a binary stream
  * @param   out     Output binary stream
  */
@@ -59,7 +70,7 @@ void ParticleModel::Serialise(ostream &out) const
     if (out.good()) {
         // Write version
         const unsigned int version = 0;
-        out.write((char*)version, sizeof(version));
+        out.write((char*)&version, sizeof(version));
     }
 }
 
@@ -73,10 +84,10 @@ void ParticleModel::SerialisePrimary(ostream &out) const
         // Write state space
         int val = 0;
         val = m_prop1;
-        out.write((char*)val, sizeof(val));
+        out.write((char*)&val, sizeof(val));
 
         val = m_prop2;
-        out.write((char*)val, sizeof(val));
+        out.write((char*)&val, sizeof(val));
     }
 }
 
