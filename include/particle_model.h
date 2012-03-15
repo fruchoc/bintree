@@ -33,6 +33,15 @@ public:
     //! Return the right child
     const ParticleModel *GetRightChild() const;
 
+    //! Return the left particle
+    const ParticleModel *GetLeftParticle() const;
+
+    //! Return the right particle
+    const ParticleModel *GetRightParticle() const;
+
+    //! Return the parent
+    const ParticleModel *GetParent() const
+
     // MODIFYING THE OBJECT
     void SetProperties(int prop1, int prop2);
 

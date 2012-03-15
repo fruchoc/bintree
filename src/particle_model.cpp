@@ -61,6 +61,22 @@ const ParticleModel *ParticleModel::GetRightChild() const
     return m_rightchild;
 }
 
+const ParticleModel *ParticleModel::GetLeftParticle() const
+{
+    return m_leftparticle;
+}
+
+const ParticleModel *ParticleModel::GetRightParticle() const
+{
+    return m_rightparticle;
+}
+
+const ParticleModel *ParticleModel::GetParent() const
+{
+    return m_parent;
+}
+
+
 /*!
  * @brief           Sets the state space of the particle
  * @param prop1     Value of property 1
