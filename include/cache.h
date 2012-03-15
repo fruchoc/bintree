@@ -37,6 +37,9 @@ public:
     //! Does the cache have a particle?
     bool HasParticle() const;
 
+    //! Does the cache have children
+    bool HasChildren() const;
+
     //! Print the connectivity indices
     void PrintIndices() const;
 

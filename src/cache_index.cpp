@@ -165,13 +165,27 @@ void CacheIndex::DeserialiseBinaryTree(ParticleModel *p, istream &in) {
 
     // Read in the node
     p->DeserialisePrimary(in);
-    // Does the particle have a cache? If not, allocate pointer to cache
+    // Find the particle's cache!
+    Cache *p_cache;
     if (GetPointerIndex(p) < 1) {
-        m_allcaches[GetNextEmptyCache()].SetParticle(p);
+        p_cache = &(m_allcaches[GetNextEmptyCache()]);
+        p_cache->SetParticle(p);
+    } else {
+        cout << "ERROR: no cache found!" << endl;
     }
 
     // Now read the children..
+    if (p_cache->HasChildren()) {
+        ParticleModel new_lc;
+        DeserialiseBinaryTree(&new_lc, in);
+        p->SetLeftChild(&new_lc);
+        new_lc.SetParent(p);
 
+        ParticleModel new_rc;
+        DeserialiseBinaryTree(&new_rc, in);
+        p->SetRightChild(&new_rc);
+        new_rc.SetParent(p);
+    }
 }
 
 void CacheIndex::DeserialiseIndex(istream &in) {

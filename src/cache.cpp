@@ -63,6 +63,15 @@ bool Cache::HasParticle() const {
     }
 }
 
+//! Returns whether the cache has children
+bool Cache::HasChildren() const {
+    if (m_lc_id > 0 && m_rc_id > 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 //! Print the connectivity information
 void Cache::PrintIndices() const {
     cout << m_id << " " << m_lc_id << " " << m_rc_id << " " << m_lp_id << " " << m_rp_id << " " << m_p_id << endl;
