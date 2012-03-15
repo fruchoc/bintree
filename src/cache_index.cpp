@@ -83,7 +83,7 @@ int CacheIndex::GetNextEmptyCache() {
     int val(-1);
     int i(0);
     for (i = 0; i < (int)m_allcaches.size(); i++) {
-        if (m_allcaches[i].HasParticle() == false) {
+        if (m_allcaches[i].HasPointer() == false) {
             val = i;
             break;
         } else {
@@ -117,6 +117,7 @@ int CacheIndex::GetPointerIndex(const ParticleModel *p) {
     for (it = m_allcaches.begin(); it < m_allcaches.end(); it++) {
         if (p == it->GetParticlePointer()) {
             val = it->GetIndex();
+            break;
         }
     }
 
@@ -124,6 +125,18 @@ int CacheIndex::GetPointerIndex(const ParticleModel *p) {
         cout << "Pointer not found." << endl;
     }*/
     return val;
+}
+
+const ParticleModel *CacheIndex::GetPointerReference(int id) {
+    const ParticleModel *p;
+    vector <Cache>::iterator it;
+    for (it = m_allcaches.begin(); it < m_allcaches.end(); it++) {
+        if (id == it->GetIndex()) {
+            p = it->GetParticlePointer();
+            break;
+        }
+    }
+    return p;
 }
 
 /*!
@@ -185,6 +198,24 @@ void CacheIndex::DeserialiseBinaryTree(ParticleModel *p, istream &in) {
         DeserialiseBinaryTree(&new_rc, in);
         p->SetRightChild(&new_rc);
         new_rc.SetParent(p);
+    }
+}
+
+void CacheIndex::RegenerateParticleLinks(ParticleModel *p) {
+    Cache *p_cache;
+    // Loop over all particles
+    int i(0);
+    for (i = 0; i < (int)m_allcaches.size(); i++) {
+        p_cache = &m_allcaches[i];
+        if (p_cache->HasParticles() == true) {
+            int lp_id(0);
+            int rp_id(0);
+
+            lp_id = p_cache->GetIndexLP();
+            rp_id = p_cache->GetIndexRP();
+
+            //p->SetLeftParticle(GetPointerReference(lp_id));
+        }
     }
 }
 

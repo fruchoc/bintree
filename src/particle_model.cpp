@@ -149,8 +149,11 @@ void ParticleModel::Deserialise(istream &in)
         CacheIndex index;
         index.DeserialiseIndex(in);
 
-        // Now read the node details in
+        // Now read the node details in (creates children-parent structure)
         index.DeserialiseBinaryTree(this, in);
+
+        // Now re-establish the right/left particle structure
+
     }
 }
 

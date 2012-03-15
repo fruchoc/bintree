@@ -34,10 +34,19 @@ public:
     //! Gets the index of the Cache particle
     int GetIndex();
 
-    //! Does the cache have a particle?
-    bool HasParticle() const;
+    //! Gets the id of the left particle
+    int GetIndexLP() const {return m_lp_id;};
 
-    //! Does the cache have children
+    //! Gets the id of the right particle
+    int GetIndexRP() const {return m_rp_id;};
+
+    //! Does the cache have a part. pointer?
+    bool HasPointer() const;
+
+    //! Does the cache have L/R particles?
+    bool HasParticles() const;
+
+    //! Does the cache have children?
     bool HasChildren() const;
 
     //! Print the connectivity indices

@@ -54,9 +54,18 @@ int Cache::GetIndex() {
     return m_id;
 }
 
-//! Returns whether the cache has a particle
-bool Cache::HasParticle() const {
+//! Returns whether the cache has a particle pointer
+bool Cache::HasPointer() const {
     if (m_prim != NULL) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+//! Returns whether the cache has L/R particles
+bool Cache::HasParticles() const {
+    if (m_lp_id > 0 && m_rp_id > 0) {
         return true;
     } else {
         return false;

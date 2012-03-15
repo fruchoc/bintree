@@ -36,6 +36,9 @@ public:
     //! Recursive function to deseralise the binary tree
     void DeserialiseBinaryTree(ParticleModel *p, istream &in);
 
+    //! Using the CacheIndex, reestablish the left/right particle links
+    void RegenerateParticleLinks(ParticleModel *p);
+
     //! Deserialise the binary tree index
     void DeserialiseIndex(istream &in);
 
@@ -55,6 +58,8 @@ private:
 
     //! Return the index of a given pointer
     int GetPointerIndex(const ParticleModel *p);
+
+    const ParticleModel *GetPointerReference(int id);
 
     //! A vector containing the list of all caches, each holding a particle
     std::vector<Cache> m_allcaches;
