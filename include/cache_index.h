@@ -33,6 +33,12 @@ public:
     //! Serialise the binary tree index
     void SerialiseIndex(ostream &out) const;
 
+    //! Recursive function to deseralise the binary tree
+    void DeserialiseBinaryTree(ParticleModel *p, istream &in);
+
+    //! Deserialise the binary tree index
+    void DeserialiseIndex(istream &in);
+
 private:
 
     //! Recursive helper function to create loop
@@ -43,6 +49,9 @@ private:
 
     //! Gets the next index number
     int GetNextIndex();
+
+    //! Gets the next empty cache index
+    int GetNextEmptyCache();
 
     //! Return the index of a given pointer
     int GetPointerIndex(const ParticleModel *p);

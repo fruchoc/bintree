@@ -28,22 +28,38 @@ public:
     void PrintParticle() const;
 
     //! Return the left child
-    const ParticleModel *GetLeftChild() const;
+    const ParticleModel *GetLeftChild() const {return m_leftchild;};
 
     //! Return the right child
-    const ParticleModel *GetRightChild() const;
+    const ParticleModel *GetRightChild() const {return m_rightchild;};
 
     //! Return the left particle
-    const ParticleModel *GetLeftParticle() const;
+    const ParticleModel *GetLeftParticle() const {return m_leftparticle;};
 
     //! Return the right particle
-    const ParticleModel *GetRightParticle() const;
+    const ParticleModel *GetRightParticle() const {return m_rightparticle;};
 
     //! Return the parent
-    const ParticleModel *GetParent() const;
+    const ParticleModel *GetParent() const {return m_parent;};
 
     // MODIFYING THE OBJECT
+    //! Set the state space of the particle
     void SetProperties(int prop1, int prop2);
+
+    //! Set the left child
+    void SetLeftChild(ParticleModel *p) {m_leftchild = p;};
+
+    //! Set the right child
+    void SetRightChild(ParticleModel *p) {m_rightchild = p;};
+
+    //! Set the left particle
+    void SetLeftParticle(ParticleModel *p) {m_leftparticle = p;};
+
+    //! Set the left particle
+    void SetRightParticle(ParticleModel *p) {m_rightparticle = p;};
+
+    //! Set the parent
+    void SetParent(ParticleModel *p) {m_parent = p;};
 
     // CREATION OF PARTICLE TREES FOR ILLUSTRATION
     //! Creates a particle tree (example 1)

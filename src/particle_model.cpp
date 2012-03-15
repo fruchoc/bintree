@@ -51,31 +51,6 @@ void ParticleModel::PrintParticle() const
     cout << " parent: " << m_parent << endl;
 }
 
-const ParticleModel *ParticleModel::GetLeftChild() const
-{
-    return m_leftchild;
-}
-
-const ParticleModel *ParticleModel::GetRightChild() const
-{
-    return m_rightchild;
-}
-
-const ParticleModel *ParticleModel::GetLeftParticle() const
-{
-    return m_leftparticle;
-}
-
-const ParticleModel *ParticleModel::GetRightParticle() const
-{
-    return m_rightparticle;
-}
-
-const ParticleModel *ParticleModel::GetParent() const
-{
-    return m_parent;
-}
-
 
 /*!
  * @brief           Sets the state space of the particle
@@ -131,10 +106,13 @@ void ParticleModel::Serialise(ostream &out) const
         const unsigned int version = 0;
         out.write((char*)&version, sizeof(version));
 
+        // First create the index
         CacheIndex index;
         index.CreateIndex(this);
-        index.SerialiseBinaryTree(this, out);
         index.SerialiseIndex(out);
+
+        // Now write the objects
+        index.SerialiseBinaryTree(this, out);
     }
 }
 
@@ -166,6 +144,13 @@ void ParticleModel::Deserialise(istream &in)
         // Read version
         unsigned int version = 0;
         in.read(reinterpret_cast<char*>(&version), sizeof(version));
+
+        // First create an index
+        CacheIndex index;
+        index.DeserialiseIndex(in);
+
+        // Now read the node details in
+        index.DeserialiseBinaryTree(this, in);
     }
 }
 

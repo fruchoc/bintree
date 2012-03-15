@@ -18,11 +18,11 @@ int main(int argc, char *argv[]) {
     ofile.close();
 
     // Read from save file
-    //ifstream ifile("test.sav", ios::binary);
-    //ParticleModel newtest;
-    //newtest.DeserialisePrimary(ifile);
+    ifstream ifile("test.sav", ios::binary);
+    ParticleModel newtest;
+    newtest.Deserialise(ifile);
     //newtest.PrintParticle();
-    //ifile.close();
+    ifile.close();
 
     return 0;
 }

@@ -22,6 +22,9 @@ public:
     //! Set index and pointer to particle
     void SetIndex(int id, const ParticleModel *p);
 
+    //! Set the particle pointer
+    void SetParticle(const ParticleModel *p) {m_prim = p;};
+
     //! Sets the children/particle indices.
     void SetChildrenParticleIndices(int lc, int rc, int lp, int rp, int par);
 
@@ -30,6 +33,12 @@ public:
 
     //! Gets the index of the Cache particle
     int GetIndex();
+
+    //! Does the cache have a particle?
+    bool HasParticle() const;
+
+    //! Print the connectivity indices
+    void PrintIndices() const;
 
     //! Serialise the cache
     void Serialise(ostream &out) const;

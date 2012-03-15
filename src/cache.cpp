@@ -11,6 +11,8 @@
 #include <stack>
 #include <stdexcept>
 
+using namespace std;
+
 /*!
  * @brief       Initialising constructor
  */
@@ -50,6 +52,20 @@ const ParticleModel* Cache::GetParticlePointer() {
 //! Returns the index of a cache
 int Cache::GetIndex() {
     return m_id;
+}
+
+//! Returns whether the cache has a particle
+bool Cache::HasParticle() const {
+    if (m_prim != NULL) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+//! Print the connectivity information
+void Cache::PrintIndices() const {
+    cout << m_id << " " << m_lc_id << " " << m_rc_id << " " << m_lp_id << " " << m_rp_id << " " << m_p_id << endl;
 }
 
 /*!

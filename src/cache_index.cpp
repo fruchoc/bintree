@@ -70,12 +70,28 @@ void CacheIndex::FindAllIndices(int id) {
 
     m_allcaches[id].SetChildrenParticleIndices(lc, rc, lp, rp, par);
 
-    cout << p << " " << lc << " " << rc << " " << lp << " " << rp << " " << par << endl;
+    m_allcaches[id].PrintIndices();
 }
 
 //! Gets the next index number
 int CacheIndex::GetNextIndex() {
     return m_allcaches.size() + 1;
+}
+
+//! Gets the next cache without a particle attached
+int CacheIndex::GetNextEmptyCache() {
+    int val(-1);
+    int i(0);
+    for (i = 0; i < (int)m_allcaches.size(); i++) {
+        if (m_allcaches[i].HasParticle() == false) {
+            val = i;
+            break;
+        } else {
+            cout << "No empty cache found!";
+        }
+
+    }
+    return val;
 }
 
 //! Prints information about the caches
@@ -104,9 +120,9 @@ int CacheIndex::GetPointerIndex(const ParticleModel *p) {
         }
     }
 
-    if (val < 1) {
+    /*if (val < 1) {
         cout << "Pointer not found." << endl;
-    }
+    }*/
     return val;
 }
 
@@ -122,8 +138,8 @@ void CacheIndex::SerialiseBinaryTree(const ParticleModel *p, ostream &out) const
         p->SerialisePrimary(out);
 
         // Do for left and right primaries
-        if (p->GetLeftChild() != NULL) p->GetLeftChild()->SerialisePrimary(out);
-        if (p->GetRightChild() != NULL) p->GetRightChild()->SerialisePrimary(out);
+        if (p->GetLeftChild() != NULL) SerialiseBinaryTree(p->GetLeftChild(), out);
+        if (p->GetRightChild() != NULL) SerialiseBinaryTree(p->GetRightChild(), out);
     }
 }
 
@@ -133,9 +149,49 @@ void CacheIndex::SerialiseBinaryTree(const ParticleModel *p, ostream &out) const
  */
 void CacheIndex::SerialiseIndex(ostream &out) const {
 
+    // Write the number of nodes
+    int val(0);
+    val = m_nodes;
+    out.write((char*)&val, sizeof(val));
+
     // Loop over the allcaches vector
     int i(0);
     for (i = 0; i < (int)m_allcaches.size(); i++) {
             m_allcaches[i].Serialise(out);
     }
+}
+
+void CacheIndex::DeserialiseBinaryTree(ParticleModel *p, istream &in) {
+
+    // Read in the node
+    p->DeserialisePrimary(in);
+    // Does the particle have a cache? If not, allocate pointer to cache
+    if (GetPointerIndex(p) < 1) {
+        m_allcaches[GetNextEmptyCache()].SetParticle(p);
+    }
+
+    // Now read the children..
+
+}
+
+void CacheIndex::DeserialiseIndex(istream &in) {
+
+    // Read number of nodes of the tree
+    int val(0);
+    in.read(reinterpret_cast<char*>(&val), sizeof(val));
+    m_nodes = (int)val;
+
+    // Add caches to allcaches vector
+    int i(0);
+    for (i = 0; i < m_nodes; i++) {
+        Cache newnode;
+        newnode.Deserialise(in);
+        m_allcaches.push_back(newnode);
+    }
+
+    /*Check index information
+    for (i = 0; i < m_nodes; i++) {
+        m_allcaches[i].PrintIndices();
+    }*/
+
 }
