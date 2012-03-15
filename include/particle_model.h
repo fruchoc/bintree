@@ -40,7 +40,7 @@ public:
     const ParticleModel *GetRightParticle() const;
 
     //! Return the parent
-    const ParticleModel *GetParent() const
+    const ParticleModel *GetParent() const;
 
     // MODIFYING THE OBJECT
     void SetProperties(int prop1, int prop2);

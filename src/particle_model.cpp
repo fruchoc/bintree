@@ -133,15 +133,8 @@ void ParticleModel::Serialise(ostream &out) const
 
         CacheIndex index;
         index.CreateIndex(this);
-
-        // Write this element
-        SerialisePrimary(out);
-
-        // Descend the left side of the tree
-        m_leftparticle->SerialisePrimary(out);
-
-        // Descend the right side of the tree
-        m_rightparticle->SerialisePrimary(out);
+        index.SerialiseBinaryTree(this, out);
+        index.SerialiseIndex(out);
     }
 }
 

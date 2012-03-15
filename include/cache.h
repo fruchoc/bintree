@@ -22,6 +22,21 @@ public:
     //! Set index and pointer to particle
     void SetIndex(int id, const ParticleModel *p);
 
+    //! Sets the children/particle indices.
+    void SetChildrenParticleIndices(int lc, int rc, int lp, int rp, int par);
+
+    //! Gets the pointer of a particle
+    const ParticleModel* GetParticlePointer();
+
+    //! Gets the index of the Cache particle
+    int GetIndex();
+
+    //! Serialise the cache
+    void Serialise(ostream &out) const;
+
+    //! Deserialise the cache
+    void Deserialise(istream &in);
+
 private:
 
     //! Particle id

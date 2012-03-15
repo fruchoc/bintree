@@ -24,12 +24,29 @@ public:
     //! Creates the Cache Index
     void CreateIndex(const ParticleModel *root);
 
+    //! Print all caches from the object
+    void PrintAllCaches();
+
+    //! Recursive function to serialise the binary tree object
+    void SerialiseBinaryTree(const ParticleModel *p, ostream &out) const;
+
+    //! Serialise the binary tree index
+    void SerialiseIndex(ostream &out) const;
+
+private:
+
+    //! Recursive helper function to create loop
+    void CreateIndexLoop(const ParticleModel *p);
+
+    //! Helper function to collect all indices
+    void FindAllIndices(int id);
+
     //! Gets the next index number
     int GetNextIndex();
 
-    void PrintAllCaches();
+    //! Return the index of a given pointer
+    int GetPointerIndex(const ParticleModel *p);
 
-private:
     //! A vector containing the list of all caches, each holding a particle
     std::vector<Cache> m_allcaches;
 
