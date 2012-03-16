@@ -65,6 +65,9 @@ public:
     //! Creates a particle tree (example 1)
     void CreateParticle1();
 
+    //! Creates a more complex particle tree (example 2)
+    void CreateParticle2();
+
     // SERIALISATION OF OBJECT
     //! Write object to output stream
     void Serialise(ostream &out) const;

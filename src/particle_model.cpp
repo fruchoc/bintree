@@ -94,6 +94,102 @@ void ParticleModel::CreateParticle1() {
     m_rightparticle->m_parent = this;
 }
 
+/*!
+ * @brief       Creates a basic particle tree (example 2)
+ *
+ * This is a particle is based on Markus Sander's thesis test particle
+ * Connectivity:
+ * id   lc  rc  lp  rp  p
+ * 1    2   7   4   11  0
+ * 2    3   6   5   6   1
+ * 3    4   5   4   5   2
+ * 4    0   0   0   0   3
+ * 5    0   0   0   0   3
+ * 6    0   0   0   0   2
+ * 7    8   9   8   11  1
+ * 8    0   0   0   0   7
+ * 9    10  11  10  11  7
+ * 10   0   0   0   0   9
+ * 11   0   0   0   0   9
+ *
+ */
+void ParticleModel::CreateParticle2() {
+    // Create root node
+    SetProperties(11, 12);
+
+    // Create node 2
+    m_leftchild = new ParticleModel();
+    m_leftchild->SetProperties(22, 23);
+    m_leftchild->m_parent = this;
+
+    // Create node 3
+    m_leftchild->m_leftchild = new ParticleModel();
+    m_leftchild->m_leftchild->SetProperties(33, 34);
+    m_leftchild->m_leftchild->m_parent = m_leftchild;
+
+    // Create node 4
+    m_leftchild->m_leftchild->m_leftchild = new ParticleModel();
+    m_leftchild->m_leftchild->m_leftchild->SetProperties(44, 45);
+    m_leftchild->m_leftchild->m_leftchild->m_parent = m_leftchild->m_leftchild;
+
+    // Create node 5
+    m_leftchild->m_leftchild->m_rightchild = new ParticleModel();
+    m_leftchild->m_leftchild->m_rightchild->SetProperties(55, 56);
+    m_leftchild->m_leftchild->m_rightchild->m_parent = m_leftchild->m_leftchild;
+
+    // Create node 6
+    m_leftchild->m_rightchild = new ParticleModel();
+    m_leftchild->m_rightchild->SetProperties(66, 67);
+    m_leftchild->m_rightchild->m_parent = m_leftchild;
+
+    // Create node 7
+    m_rightchild = new ParticleModel();
+    m_rightchild->SetProperties(77, 78);
+    m_rightchild->m_parent = this;
+
+    // Create node 8
+    m_rightchild->m_leftchild = new ParticleModel();
+    m_rightchild->m_leftchild->SetProperties(88, 89);
+    m_rightchild->m_leftchild->m_parent = m_rightchild;
+
+    // Create node 9
+    m_rightchild->m_rightchild = new ParticleModel();
+    m_rightchild->m_rightchild->SetProperties(99, 98);
+    m_rightchild->m_rightchild->m_parent = m_rightchild;
+
+    // Create node 10
+    m_rightchild->m_rightchild->m_leftchild = new ParticleModel();
+    m_rightchild->m_rightchild->m_leftchild->SetProperties(100, 101);
+    m_rightchild->m_rightchild->m_leftchild->m_parent = m_rightchild->m_rightchild;
+
+    // Create node 11
+    m_rightchild->m_rightchild->m_rightchild = new ParticleModel();
+    m_rightchild->m_rightchild->m_rightchild->SetProperties(111, 112);
+    m_rightchild->m_rightchild->m_rightchild->m_parent = m_rightchild->m_rightchild;
+
+    // ESTABLISH PARTICLE LINKAGES
+    // node 1: left = 4, right = 11
+    m_leftparticle = m_leftchild->m_leftchild->m_leftchild;
+    m_rightparticle = m_rightchild->m_rightchild->m_rightchild;
+
+    // node 2: left = 5, right = 6
+    m_leftchild->m_leftparticle = m_leftchild->m_leftchild->m_rightchild;
+    m_leftchild->m_rightparticle = m_leftchild->m_rightchild;
+
+    // node 3: left = 4, right = 5
+    m_leftchild->m_leftchild->m_leftparticle = m_leftchild->m_leftchild->m_leftchild;
+    m_leftchild->m_leftchild->m_rightparticle = m_leftchild->m_leftchild->m_rightchild;
+
+    // node 7: left = 8, right = 11
+    m_rightchild->m_leftparticle = m_rightchild->m_leftchild;
+    m_rightchild->m_rightparticle = m_rightchild->m_rightchild->m_rightchild;
+
+    // node 9: left = 10, right = 11
+    m_rightchild->m_rightchild->m_leftparticle = m_rightchild->m_rightchild->m_leftchild;
+    m_rightchild->m_rightchild->m_rightparticle = m_rightchild->m_rightchild->m_rightchild;
+
+}
+
 
 /*!
  * @brief           Writes the object to a binary stream
