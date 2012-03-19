@@ -49,6 +49,11 @@ void ParticleModel::PrintParticle() const
     cout << " lc: " << m_leftchild << " rc: " << m_rightchild;
     cout << " lp: " << m_leftparticle << " rp: " << m_rightparticle;
     cout << " parent: " << m_parent << endl;
+
+    if (m_leftchild != NULL) {
+        m_leftchild->PrintParticle();
+        m_rightchild->PrintParticle();
+    }
 }
 
 
