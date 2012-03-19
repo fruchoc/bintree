@@ -229,11 +229,9 @@ void ParticleModel::SerialiseLoop(ostream &out, const ParticleModel *root) const
     // Now write the left/right particle connectivity
     int val(0);
     val = root->GetParticleIndex(m_leftparticle, this);
-    cout << this << " " << val << endl;
     out.write((char*)&val, sizeof(val));
 
     val = root->GetParticleIndex(m_rightparticle, this);
-    cout << this << " " << val << endl;
     out.write((char*)&val, sizeof(val));
 }
 
@@ -346,12 +344,10 @@ void ParticleModel::DeserialiseLoop(istream &in, ParticleModel *root)
     // Check the left particle
     in.read(reinterpret_cast<char*>(&val), sizeof(val));
     if (val != 0) FindParticleFromIndex(val, m_leftparticle);
-    cout << this << " " << val << endl;
 
     // Check the right particle
     in.read(reinterpret_cast<char*>(&val), sizeof(val));
     if (val != 0) FindParticleFromIndex(val, m_rightparticle);
-    cout << this << " " << val << endl;
 }
 
 void ParticleModel::FindParticleFromIndex(int index, ParticleModel* target) {
