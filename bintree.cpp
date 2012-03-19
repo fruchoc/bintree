@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
     ifstream ifile("test.sav", ios::binary);
     ParticleModel newtest;
     newtest.Deserialise(ifile);
-    //newtest.PrintParticle();
+    newtest.PrintParticle();
     ifile.close();
 
     return 0;
