@@ -2,8 +2,6 @@
 #include <iostream>
 #include <fstream>
 #include "include/particle_model.h"
-#include "include/cache.h"
-#include "include/cache_index.h"
 
 using namespace std;
 

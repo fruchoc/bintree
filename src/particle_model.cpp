@@ -7,7 +7,6 @@
 
 // Includes
 #include "../include/particle_model.h"
-#include "../include/cache_index.h"
 #include <iostream>
 #include <stack>
 
