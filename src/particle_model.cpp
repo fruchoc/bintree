@@ -46,8 +46,13 @@ ParticleModel::~ParticleModel()
 void ParticleModel::PrintParticle() const
 {
     cout << this << " p1: " << m_prop1 << " p2: " << m_prop2;
-    cout << " lc: " << m_leftchild << " rc: " << m_rightchild;
-    cout << " lp: " << m_leftparticle << " rp: " << m_rightparticle;
+    if (m_leftchild == NULL) {
+        cout << " lc: " << m_leftchild << " rc: " << m_rightchild;
+        cout << " lp: " << m_leftparticle << " rp: " << m_rightparticle;
+    } else {
+        cout << " lc: " << m_leftchild->m_prop1 << " rc: " << m_rightchild->m_prop1;
+        cout << " lp: " << m_leftparticle->m_prop1 << " rp: " << m_rightparticle->m_prop1;
+    }
     cout << " parent: " << m_parent << endl;
 
     if (m_leftchild != NULL) {
@@ -343,51 +348,50 @@ void ParticleModel::DeserialiseLoop(istream &in, ParticleModel *root)
     int val(0);
     // Check the left particle
     in.read(reinterpret_cast<char*>(&val), sizeof(val));
-    if (val != 0) FindParticleFromIndex(val, m_leftparticle);
+    if (val != 0) m_leftparticle = root->FindParticleFromIndex(val);
 
     // Check the right particle
     in.read(reinterpret_cast<char*>(&val), sizeof(val));
-    if (val != 0) FindParticleFromIndex(val, m_rightparticle);
+    if (val != 0) m_rightparticle = root->FindParticleFromIndex(val);
 }
 
-void ParticleModel::FindParticleFromIndex(int index, ParticleModel* target) {
+ParticleModel* ParticleModel::FindParticleFromIndex(int index) {
 
     // Use the null pointer where 0 is given.
-    if (index == 0) target = NULL;
+    if (index == 0) return NULL;
 
     // Otherwise, start at the top of the tree and work downwards...
     bool status(false);                 // Success flag for loop
     int sum(1);                         // Counter for tracking node number
 
-    FindParticleFromIndexLoop(&index, target, this, &sum, &status);
-
-    // Check the particle was found..
-    if (not status) {
-        cout << "couldn't find particle!" << endl;
-    }
+    return FindParticleFromIndexLoop(&index, &sum, &status);
 }
 
-void ParticleModel::FindParticleFromIndexLoop(
+ParticleModel* ParticleModel::ReturnAddress(ParticleModel* target) {
+    return target;
+}
+
+ParticleModel* ParticleModel::FindParticleFromIndexLoop(
         int *index,
-        ParticleModel *target,
-        ParticleModel *p,
         int *sum,
         bool *status)
 {
     if (*index == *sum) {
-        target = p;
         *status = true;
+        return this;
     } else {
         // Jump to next node
         (*sum)++;
+        ParticleModel* ans;
         if (not *status) {
-            if (p->m_leftchild != NULL)
-            FindParticleFromIndexLoop(index, target, p->m_leftchild, sum, status);
+            if (m_leftchild != NULL)
+                ans = m_leftchild->FindParticleFromIndexLoop(index, sum, status);
         }
         if (not *status) {
-            if (p->m_rightchild != NULL)
-            FindParticleFromIndexLoop(index, target, p->m_rightchild, sum, status);
+            if (m_rightchild != NULL)
+                ans = m_rightchild->FindParticleFromIndexLoop(index, sum, status);
         }
+        return ans;
     }
 }
 

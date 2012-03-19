@@ -10,7 +10,7 @@ using namespace std;
 int main(int argc, char *argv[]) {
 
     ParticleModel test;
-    test.CreateParticle1();
+    test.CreateParticle2();
 
     // Write to save file
     ofstream ofile("test.sav", ios::binary);

@@ -85,12 +85,12 @@ public:
 
     void DeserialiseLoop(istream &in, ParticleModel *root);
 
-    void FindParticleFromIndex(int index, ParticleModel *target);
+    ParticleModel* FindParticleFromIndex(int index);
 
-    void FindParticleFromIndexLoop(
+    ParticleModel* ReturnAddress(ParticleModel* target);
+
+    ParticleModel* FindParticleFromIndexLoop(
             int *index,
-            ParticleModel *target,
-            ParticleModel *p,
             int *sum,
             bool *status);
 
