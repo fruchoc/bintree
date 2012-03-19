@@ -202,13 +202,69 @@ void ParticleModel::Serialise(ostream &out) const
         const unsigned int version = 0;
         out.write((char*)&version, sizeof(version));
 
-        // First create the index
-        CacheIndex index;
-        index.CreateIndex(this);
-        index.SerialiseIndex(out);
+        // Call the recursive serialiser
+        SerialiseLoop(out, this);
+    }
+}
 
-        // Now write the objects
-        index.SerialiseBinaryTree(this, out);
+void ParticleModel::SerialiseLoop(ostream &out, const ParticleModel *root) const
+{
+    // Serialise the state space first
+    SerialisePrimary(out);
+
+    // Now serialise the children
+    if (m_leftchild != NULL) m_leftchild->SerialiseLoop(out, root);
+    if (m_rightchild != NULL) m_rightchild->SerialiseLoop(out, root);
+
+    // Now write the left/right particle connectivity
+    int val(0);
+    val = root->GetParticleIndex(m_leftparticle, this);
+    cout << this << " " << val << endl;
+    out.write((char*)&val, sizeof(val));
+
+    val = root->GetParticleIndex(m_rightparticle, this);
+    cout << this << " " << val << endl;
+    out.write((char*)&val, sizeof(val));
+}
+
+int ParticleModel::GetParticleIndex(
+        const ParticleModel *target,
+        const ParticleModel *p) const
+{
+    // Return zero if the target is nothing.
+    if (target == NULL) return 0;
+
+    // Otherwise, first particle has ID of 1
+    int sum(1);
+    bool status(false);
+    GetParticleIndexLoop(target, this, &sum, &status);
+
+    // Check the particle was found..
+    if (not status) {
+        cout << "couldn't find particle!" << endl;
+    }
+
+    return sum;
+}
+
+void ParticleModel::GetParticleIndexLoop(
+        const ParticleModel *target,
+        const ParticleModel *p,
+        int *sum,
+        bool *status) const
+{
+    if (target == p) {
+        *status = true;
+    } else {
+        // Jump to next node
+        (*sum)++;
+        if (not *status) {
+            if (p->m_leftchild != NULL)
+            GetParticleIndexLoop(target, p->m_leftchild, sum, status);
+
+            if (p->m_rightchild != NULL)
+            GetParticleIndexLoop(target, p->m_rightchild, sum, status);
+        }
     }
 }
 
