@@ -11,7 +11,7 @@ using namespace std;
 int main(int argc, char *argv[]) {
 
     ParticleModel test;
-    test.CreateParticle2();
+    test.CreateParticle1();
 
     // Write to save file
     ofstream ofile("test.sav", ios::binary);
@@ -22,11 +22,11 @@ int main(int argc, char *argv[]) {
     cout << "test";
 
     // Read from save file
-    ifstream ifile("test.sav", ios::binary);
-    ParticleModel newtest;
-    newtest.Deserialise(ifile);
-    newtest.PrintParticle();
-    ifile.close();
+    //ifstream ifile("test.sav", ios::binary);
+    //ParticleModel newtest;
+    //newtest.Deserialise(ifile);
+    //newtest.PrintParticle();
+    //ifile.close();
 
     return 0;
 }
