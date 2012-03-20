@@ -7,6 +7,7 @@
 
 // Includes
 #include "../include/particle_model.h"
+#include "../include/serialiser.h"
 #include <iostream>
 #include <stack>
 
@@ -210,6 +211,9 @@ void ParticleModel::Serialise(ostream &out) const
         // Write version
         const unsigned int version = 0;
         out.write((char*)&version, sizeof(version));
+
+        Serialiser <ParticleModel> newclass;
+        newclass.Serialise(out, this);
 
         // Call the recursive serialiser
         SerialiseLoop(out, this);

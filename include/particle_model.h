@@ -12,6 +12,7 @@
 #include <iostream>
 #include <stack>
 #include "../include/parent_particle_model.h"
+#include "../include/serialiser.h"
 
 // Namespaces
 using namespace std;
@@ -19,6 +20,7 @@ using namespace std;
 class ParticleModel : public ParentParticleModel
 {
 public:
+    friend class Serialiser<class ParticleClass>;
     //! Default constructor
     ParticleModel();
 
