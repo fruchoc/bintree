@@ -11,11 +11,13 @@
 // Includes
 #include <iostream>
 #include <stack>
+#include "../include/parent_particle_model.h"
 
 // Namespaces
 using namespace std;
 
-class ParticleModel {
+class ParticleModel : public ParentParticleModel
+{
 public:
     //! Default constructor
     ParticleModel();
