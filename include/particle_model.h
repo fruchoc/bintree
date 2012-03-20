@@ -20,7 +20,7 @@ using namespace std;
 class ParticleModel : public ParentParticleModel
 {
 public:
-    friend class Serialiser<class ParticleClass>;
+    friend class Serialiser<class ParticleModel>;
     //! Default constructor
     ParticleModel();
 

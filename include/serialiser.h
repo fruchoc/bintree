@@ -42,7 +42,7 @@ public:
 
         // Does this primary have children?
         bool children(false);
-        //if (node->m_leftchild != NULL && node->m_rightchild != NULL) children = true;
+        if (node->m_leftchild != NULL && node->m_rightchild != NULL) children = true;
         out.write((char*)&children, sizeof(children));
     }
 };
