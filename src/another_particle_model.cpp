@@ -39,6 +39,27 @@ AnotherParticleModel::~AnotherParticleModel()
 }
 
 /*!
+ * @brief       Writes the state of the particle to console.
+ */
+void AnotherParticleModel::PrintParticle() const
+{
+    cout << this << " p1: " << m_num1 << " p2: " << m_num2;
+    if (m_leftchild == NULL) {
+        cout << " lc: " << m_leftchild << " rc: " << m_rightchild;
+        cout << " lp: " << m_leftparticle << " rp: " << m_rightparticle;
+    } else {
+        cout << " lc: " << m_leftchild->m_num1 << " rc: " << m_rightchild->m_num1;
+        cout << " lp: " << m_leftparticle->m_num1 << " rp: " << m_rightparticle->m_num1;
+    }
+    cout << " parent: " << m_parent << endl;
+
+    if (m_leftchild != NULL) {
+        m_leftchild->PrintParticle();
+        m_rightchild->PrintParticle();
+    }
+}
+
+/*!
  * @brief       Sets the state space of the particle
  * @param num1  Parameter 1
  * @param num2  Parameter 2

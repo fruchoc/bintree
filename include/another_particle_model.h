@@ -22,6 +22,9 @@ public:
     //! Default destructor
     virtual ~AnotherParticleModel();
 
+    //! Print the particle state space
+    void PrintParticle() const;
+
     //! Set the state space of the particle
     void SetProperties(int num1, int num2);
 
