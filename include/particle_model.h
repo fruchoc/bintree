@@ -75,11 +75,11 @@ public:
     // SERIALISATION OF OBJECT
     //! Write object to output stream
     void Serialise(ostream &out) const;
-
+/*
     void SerialiseLoop(ostream &out, const ParticleModel *root) const;
 
     int GetParticleIndex(const ParticleModel *target, const ParticleModel *p) const;
-    void GetParticleIndexLoop(const ParticleModel *target, const ParticleModel *p, int *sum, bool *status) const;
+    void GetParticleIndexLoop(const ParticleModel *target, const ParticleModel *p, int *sum, bool *status) const;*/
 
     //! Write state space to stream
     void SerialisePrimary(ostream &out) const;
@@ -87,7 +87,7 @@ public:
     //! Read object from stream
     void Deserialise(istream &in);
 
-    void DeserialiseLoop(istream &in, ParticleModel *root);
+    /*void DeserialiseLoop(istream &in, ParticleModel *root);
 
     ParticleModel* FindParticleFromIndex(int index);
 
@@ -96,7 +96,7 @@ public:
     ParticleModel* FindParticleFromIndexLoop(
             int *index,
             int *sum,
-            bool *status);
+            bool *status);*/
 
     //! Read state space from stream
     void DeserialisePrimary(istream &in);

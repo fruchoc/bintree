@@ -216,10 +216,10 @@ void ParticleModel::Serialise(ostream &out) const
         newclass.Serialise(out, this);
 
         // Call the recursive serialiser
-        SerialiseLoop(out, this);
+        //SerialiseLoop(out, this);
     }
 }
-
+/*
 void ParticleModel::SerialiseLoop(ostream &out, const ParticleModel *root) const
 {
     // Serialise the state space first
@@ -283,7 +283,7 @@ void ParticleModel::GetParticleIndexLoop(
             GetParticleIndexLoop(target, p->m_rightchild, sum, status);
         }
     }
-}
+}*/
 
 /*!
  * @brief           Writes the state space to a binary stream
@@ -315,11 +315,11 @@ void ParticleModel::Deserialise(istream &in)
         in.read(reinterpret_cast<char*>(&version), sizeof(version));
 
         // Now call the recursive loop to read the structure
-        DeserialiseLoop(in, this);
+        //DeserialiseLoop(in, this);
 
     }
 }
-
+/*
 void ParticleModel::DeserialiseLoop(istream &in, ParticleModel *root)
 {
     // Read in the state space first
@@ -347,7 +347,7 @@ void ParticleModel::DeserialiseLoop(istream &in, ParticleModel *root)
      * NOTE: we are able to do this because this section is not reached until
      * the rightmost child is created, thus *all* particles should have been
      * created before we attempt to establish pointer links between them.
-     */
+
     int val(0);
     // Check the left particle
     in.read(reinterpret_cast<char*>(&val), sizeof(val));
@@ -396,7 +396,7 @@ ParticleModel* ParticleModel::FindParticleFromIndexLoop(
         }
         return ans;
     }
-}
+}*/
 
 /*!
  * @brief           Reads the state space from a binary stream

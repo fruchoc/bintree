@@ -28,6 +28,7 @@ Release/
 *.dir/
 *.project
 *.cproject
+.settings
 
 # Executables built by cmake
 mops-app

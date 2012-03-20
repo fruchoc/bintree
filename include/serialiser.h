@@ -53,10 +53,10 @@ public:
 
         // Now write the left/right particle connectivity
         int val(0);
-        val = root->GetParticleIndex(root, node->m_leftparticle);
+        val = GetParticleIndex(root, node->m_leftparticle);
         out.write((char*)&val, sizeof(val));
 
-        //val = root->GetParticleIndex(m_rightparticle, this);
+        val = GetParticleIndex(root, node->m_rightparticle);
         out.write((char*)&val, sizeof(val));
     }
 
@@ -68,7 +68,7 @@ public:
         // Otherwise, first particle has ID of 1
         int sum(1);
         bool status(false);
-        GetParticleIndexLoop(node, target &sum, &status);
+        GetParticleIndexLoop(node, target, &sum, &status);
 
         // Check the particle was found..
         if (not status) {
