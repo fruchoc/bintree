@@ -31,39 +31,9 @@ public:
     //! Print the particle state space
     void PrintParticle() const;
 
-    //! Return the left child
-    const ParticleModel *GetLeftChild() const {return m_leftchild;};
-
-    //! Return the right child
-    const ParticleModel *GetRightChild() const {return m_rightchild;};
-
-    //! Return the left particle
-    const ParticleModel *GetLeftParticle() const {return m_leftparticle;};
-
-    //! Return the right particle
-    const ParticleModel *GetRightParticle() const {return m_rightparticle;};
-
-    //! Return the parent
-    const ParticleModel *GetParent() const {return m_parent;};
-
     // MODIFYING THE OBJECT
     //! Set the state space of the particle
     void SetProperties(int prop1, int prop2);
-
-    //! Set the left child
-    void SetLeftChild(ParticleModel *p) {m_leftchild = p;};
-
-    //! Set the right child
-    void SetRightChild(ParticleModel *p) {m_rightchild = p;};
-
-    //! Set the left particle
-    void SetLeftParticle(ParticleModel *p) {m_leftparticle = p;};
-
-    //! Set the left particle
-    void SetRightParticle(ParticleModel *p) {m_rightparticle = p;};
-
-    //! Set the parent
-    void SetParent(ParticleModel *p) {m_parent = p;};
 
     // CREATION OF PARTICLE TREES FOR ILLUSTRATION
     //! Creates a particle tree (example 1)
@@ -75,28 +45,12 @@ public:
     // SERIALISATION OF OBJECT
     //! Write object to output stream
     void Serialise(ostream &out) const;
-/*
-    void SerialiseLoop(ostream &out, const ParticleModel *root) const;
-
-    int GetParticleIndex(const ParticleModel *target, const ParticleModel *p) const;
-    void GetParticleIndexLoop(const ParticleModel *target, const ParticleModel *p, int *sum, bool *status) const;*/
 
     //! Write state space to stream
     void SerialisePrimary(ostream &out) const;
 
     //! Read object from stream
     void Deserialise(istream &in);
-
-    /*void DeserialiseLoop(istream &in, ParticleModel *root);
-
-    ParticleModel* FindParticleFromIndex(int index);
-
-    ParticleModel* ReturnAddress(ParticleModel* target);
-
-    ParticleModel* FindParticleFromIndexLoop(
-            int *index,
-            int *sum,
-            bool *status);*/
 
     //! Read state space from stream
     void DeserialisePrimary(istream &in);

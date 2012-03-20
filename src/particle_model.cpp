@@ -209,81 +209,14 @@ void ParticleModel::Serialise(ostream &out) const
 {
     if (out.good()) {
         // Write version
-        const unsigned int version(1);
+        const unsigned int version(0);
         out.write((char*)&version, sizeof(version));
 
         Serialiser <ParticleModel> newclass;
         newclass.Serialise(out, this);
-
-        // Call the recursive serialiser
-        //SerialiseLoop(out, this);
     }
 }
-/*
-void ParticleModel::SerialiseLoop(ostream &out, const ParticleModel *root) const
-{
-    // Serialise the state space first
-    SerialisePrimary(out);
 
-    // Does this primary have children?
-    bool children(false);
-    if (m_leftchild != NULL && m_rightchild != NULL) children = true;
-    out.write((char*)&children, sizeof(children));
-
-    // Now serialise the children
-    if (children) m_leftchild->SerialiseLoop(out, root);
-    if (children) m_rightchild->SerialiseLoop(out, root);
-
-    // Now write the left/right particle connectivity
-    int val(0);
-    val = root->GetParticleIndex(m_leftparticle, this);
-    out.write((char*)&val, sizeof(val));
-
-    val = root->GetParticleIndex(m_rightparticle, this);
-    out.write((char*)&val, sizeof(val));
-}
-
-int ParticleModel::GetParticleIndex(
-        const ParticleModel *target,
-        const ParticleModel *p) const
-{
-    // Return zero if the target is nothing.
-    if (target == NULL) return 0;
-
-    // Otherwise, first particle has ID of 1
-    int sum(1);
-    bool status(false);
-    GetParticleIndexLoop(target, this, &sum, &status);
-
-    // Check the particle was found..
-    if (not status) {
-        cout << "couldn't find particle!" << endl;
-    }
-
-    return sum;
-}
-
-void ParticleModel::GetParticleIndexLoop(
-        const ParticleModel *target,
-        const ParticleModel *p,
-        int *sum,
-        bool *status) const
-{
-    if (target == p) {
-        *status = true;
-    } else {
-        // Jump to next node
-        (*sum)++;
-        if (not *status) {
-            if (p->m_leftchild != NULL)
-            GetParticleIndexLoop(target, p->m_leftchild, sum, status);
-        }
-        if (not *status) {
-            if (p->m_rightchild != NULL)
-            GetParticleIndexLoop(target, p->m_rightchild, sum, status);
-        }
-    }
-}*/
 
 /*!
  * @brief           Writes the state space to a binary stream
@@ -320,84 +253,6 @@ void ParticleModel::Deserialise(istream &in)
 
     }
 }
-/*
-void ParticleModel::DeserialiseLoop(istream &in, ParticleModel *root)
-{
-    // Read in the state space first
-    DeserialisePrimary(in);
-
-    // Does the primary have children?
-    bool children(false);
-    in.read(reinterpret_cast<char*>(&children), sizeof(children));
-
-    if (children) {
-        // Create new children particles
-        m_leftchild = new ParticleModel();
-        m_rightchild = new ParticleModel();
-
-        // Read in the children
-        m_leftchild->DeserialiseLoop(in, root);
-        m_leftchild->m_parent = this;
-        m_rightchild->DeserialiseLoop(in, root);
-        m_rightchild->m_parent = this;
-    }
-
-    cout << "deserialising.." << endl;
-    /*
-     * Now use the connectivity indices to reconnect particles
-     * NOTE: we are able to do this because this section is not reached until
-     * the rightmost child is created, thus *all* particles should have been
-     * created before we attempt to establish pointer links between them.
-
-    int val(0);
-    // Check the left particle
-    in.read(reinterpret_cast<char*>(&val), sizeof(val));
-    if (val != 0) m_leftparticle = root->FindParticleFromIndex(val);
-
-    // Check the right particle
-    in.read(reinterpret_cast<char*>(&val), sizeof(val));
-    if (val != 0) m_rightparticle = root->FindParticleFromIndex(val);
-}
-
-ParticleModel* ParticleModel::FindParticleFromIndex(int index) {
-
-    // Use the null pointer where 0 is given.
-    if (index == 0) return NULL;
-
-    // Otherwise, start at the top of the tree and work downwards...
-    bool status(false);                 // Success flag for loop
-    int sum(1);                         // Counter for tracking node number
-
-    return FindParticleFromIndexLoop(&index, &sum, &status);
-}
-
-ParticleModel* ParticleModel::ReturnAddress(ParticleModel* target) {
-    return target;
-}
-
-ParticleModel* ParticleModel::FindParticleFromIndexLoop(
-        int *index,
-        int *sum,
-        bool *status)
-{
-    if (*index == *sum) {
-        *status = true;
-        return this;
-    } else {
-        // Jump to next node
-        (*sum)++;
-        ParticleModel* ans;
-        if (not *status) {
-            if (m_leftchild != NULL)
-                ans = m_leftchild->FindParticleFromIndexLoop(index, sum, status);
-        }
-        if (not *status) {
-            if (m_rightchild != NULL)
-                ans = m_rightchild->FindParticleFromIndexLoop(index, sum, status);
-        }
-        return ans;
-    }
-}*/
 
 /*!
  * @brief           Reads the state space from a binary stream

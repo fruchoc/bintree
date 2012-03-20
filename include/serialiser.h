@@ -1,5 +1,5 @@
 /*
- * Serialiser.h
+ * serialiser.h
  *
  *  Created on: 20 Mar 2012
  *      Author: wjm34
@@ -20,10 +20,18 @@ template <class ParticleClass>
 class Serialiser
 {
 public:
-    void PrintParams(ParticleClass input) {
-        input.PrintParticle();
-    }
+    //! Default constructor
+    Serialiser() {};
 
+    //! Default destructor
+    ~Serialiser() {};
+
+    /*!
+     * @brief       Serialises a particle binary tree structure
+     *
+     * @param out   Output binary stream
+     * @param root  Pointer to the root node of the tree
+     */
     void Serialise(ostream &out, const ParticleClass* root) const
     {
 
@@ -37,6 +45,13 @@ public:
         }
     }
 
+    /*!
+     * @brief       Helper function to write the primary state space and connectivity
+     *
+     * @param out   Output binary stream
+     * @param root  Pointer to the root node of the tree
+     * @param node  Pointer to the node to be investigated
+     */
     void SerialiseLoop(ostream &out, const ParticleClass* root, const ParticleClass* node) const
     {
         // Serialise the state space first
@@ -60,6 +75,12 @@ public:
         out.write((char*)&val, sizeof(val));
     }
 
+    /*!
+     * @brief           Returns the index of a particle, given its address
+     * @param node      Pointer to the current node being investigated
+     * @param target    Pointer to the target node
+     * @return          Value of the index
+     */
     int GetParticleIndex(const ParticleClass* node, const ParticleClass* target) const
     {
         // Return zero if the target is nothing.
@@ -78,6 +99,18 @@ public:
         return sum;
     }
 
+    /*!
+     * @brief           Recursive function to help find the node index
+     *
+     * This function starts at the root node and jumps to each node,
+     * incrementing the counter until the desired function is found. 0 is
+     * assumed to be NULL, and the root node has index 1.
+     *
+     * @param node      Pointer to the current node being investigated
+     * @param target    Pointer to the target node
+     * @param sum       Pointer to the counter
+     * @param status    Flag indicating whether the node has been found
+     */
     void GetParticleIndexLoop(
             const ParticleClass* node,
             const ParticleClass* target,
@@ -100,9 +133,10 @@ public:
         }
     }
 
-
-    /*###############################
-     * Deserialise functionality
+    /*!
+     * @brief       Deserialises a binary tree structure
+     * @param in    Input binary stream
+     * @param root  Pointer to the root node of the tree
      */
     void Deserialise(istream &in, ParticleClass *root)
     {
@@ -120,6 +154,12 @@ public:
         }
     }
 
+    /*!
+     * @brief       Helper function to read the state space and connectivity
+     * @param in    Input binary stream
+     * @param root  Pointer to the root node of the tree
+     * @param node  Pointer to the current node being investigated
+     */
     void DeserialiseLoop(istream &in, ParticleClass* root, ParticleClass* node)
     {
         // Read in the state space first
@@ -157,6 +197,12 @@ public:
         if (val != 0) node->m_rightparticle = FindParticleFromIndex(root, val);
     }
 
+    /*!
+     * @brief       Returns the address of a particle, given its index
+     * @param node  Pointer to the current node being investigated
+     * @param index Index of particle in tree
+     * @return      Pointer to the desired node
+     */
     ParticleClass* FindParticleFromIndex(ParticleClass* node, int index) {
 
         // Use the null pointer where 0 is given.
@@ -169,6 +215,14 @@ public:
         return FindParticleFromIndexLoop(node, &index, &sum, &status);
     }
 
+    /*!
+     * @brief           Recursive function to help find the pointer address
+     * @param node      Pointer to the current node being investigated
+     * @param index     Index of particle in tree
+     * @param sum       Pointer to the counter
+     * @param status    Flag indicating whether the node has been found
+     * @return          Pointer to the desired node
+     */
     ParticleClass* FindParticleFromIndexLoop(ParticleClass* node, int *index, int *sum, bool *status)
     {
         if (*index == *sum) {
