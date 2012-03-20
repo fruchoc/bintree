@@ -3,14 +3,14 @@
 #include <fstream>
 #include "include/serialiser.h"
 #include "include/particle_model.h"
-
+#include "include/another_particle_model.h"
 
 using namespace std;
 
 
 int main(int argc, char *argv[]) {
 
-    ParticleModel test;
+    AnotherParticleModel test;
     test.CreateParticle2();
 
     // Write to save file
@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
 
     // Read from save file
     ifstream ifile("test.sav", ios::binary);
-    ParticleModel newtest;
+    AnotherParticleModel newtest;
     newtest.Deserialise(ifile);
     newtest.PrintParticle();
     ifile.close();

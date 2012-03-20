@@ -20,7 +20,9 @@ using namespace std;
 class ParticleModel : public ParentParticleModel
 {
 public:
+    // Must give serialiser access to private attributes
     friend class Serialiser<class ParticleModel>;
+
     //! Default constructor
     ParticleModel();
 

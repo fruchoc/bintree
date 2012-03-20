@@ -12,10 +12,14 @@
 #include <iostream>
 #include <stack>
 #include "../include/parent_particle_model.h"
+#include "../include/serialiser.h"
 
 class AnotherParticleModel : public ParentParticleModel
 {
 public:
+    // Must give serialiser access to private attributes
+    friend class Serialiser<class AnotherParticleModel>;
+
     //! Default constructor
     AnotherParticleModel();
 
@@ -27,6 +31,23 @@ public:
 
     //! Set the state space of the particle
     void SetProperties(int num1, int num2);
+
+    //! Create a particle
+    void CreateParticle2();
+
+    // SERIALISATION OF OBJECT
+    //! Write object to output stream
+    void Serialise(ostream &out) const;
+
+    //! Write state space to stream
+    void SerialisePrimary(ostream &out) const;
+
+    //! Read object from stream
+    void Deserialise(istream &in);
+
+    //! Read state space from stream
+    void DeserialisePrimary(istream &in);
+
 
 private:
     //! State of particle property 1
