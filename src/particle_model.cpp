@@ -209,7 +209,7 @@ void ParticleModel::Serialise(ostream &out) const
 {
     if (out.good()) {
         // Write version
-        const unsigned int version = 0;
+        const unsigned int version(1);
         out.write((char*)&version, sizeof(version));
 
         Serialiser <ParticleModel> newclass;
@@ -311,11 +311,12 @@ void ParticleModel::Deserialise(istream &in)
 {
     if (in.good()) {
         // Read version
-        unsigned int version = 0;
+        unsigned int version(0);
         in.read(reinterpret_cast<char*>(&version), sizeof(version));
 
         // Now call the recursive loop to read the structure
-        //DeserialiseLoop(in, this);
+        Serialiser <ParticleModel> newclass;
+        newclass.Deserialise(in, this);
 
     }
 }

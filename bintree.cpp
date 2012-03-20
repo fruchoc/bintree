@@ -11,22 +11,22 @@ using namespace std;
 int main(int argc, char *argv[]) {
 
     ParticleModel test;
-    test.CreateParticle1();
+    test.CreateParticle2();
 
     // Write to save file
     ofstream ofile("test.sav", ios::binary);
     test.Serialise(ofile);
     ofile.close();
-    Serialiser <ParticleModel> newclass;
-    newclass.PrintParams(test);
-    cout << "test";
+
+    cout << "###########################" << endl;
+
 
     // Read from save file
-    //ifstream ifile("test.sav", ios::binary);
-    //ParticleModel newtest;
-    //newtest.Deserialise(ifile);
-    //newtest.PrintParticle();
-    //ifile.close();
+    ifstream ifile("test.sav", ios::binary);
+    ParticleModel newtest;
+    newtest.Deserialise(ifile);
+    newtest.PrintParticle();
+    ifile.close();
 
     return 0;
 }
