@@ -1,2 +1,34 @@
 bintree: An algorithm to serialise/deserialise complex binary trees, written in C++.
 (c) William Menz (wjm34) 2012
+
+This simulates models for nanoparticle aggregates as described by Sander et al. (2009)
+The properties of primary particles are described by a ParticleModel class. The
+primaries are connected via a binary tree to model the connectivity of primary
+particles within a real particle aggregate.
+
+A particle binary tree always has a root node. A node contains pointers to a right 
+and left child node of the same class. The children nodes have pointers back to 
+their parent nodes. Each node also has a pointer to a left/right particle node, 
+also of the same class. 
+
+The structure created by the children nodes are used to generate the binary tree.
+This ensures that every node is accessible through a standard algorithm. The 
+left/right particle pointer structure represents the 'real connectivity' of 
+the primary particle aggregate. 
+
+The algorithm therefore serialises and deserialises in the following way:
+    1. write the properties of the particle class
+    2. call this function on the left child
+    3. call this function on the right child
+    4. write the indices of the left/right particles as
+            obtained through this method
+
+Thus, when deserialising, the recursive function ensures all nodes in the tree
+are created before attempting to establish the pointer connection of the
+particle nodes. 
+
+
+
+References:
+Sander, M et al. (2009), "A Detailed Model for the Sintering of Polydispersed 
+Nanoparticle Agglomerates", Aerosol Science and Technology, 43, 978-989
